@@ -1,22 +1,15 @@
 .nav-menu .nav-item {
   margin: 0 10px;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-}
+  transition: 0.3s; }
+  .nav-menu .nav-item i {
+    display: block;
+    text-align: center;
+    font-size: 28px;
+    opacity: 0.6; }
+  .nav-menu .nav-item:hover {
+    background-color: #eee;
+    opacity: 1; }
+  .nav-menu .nav-item:hover > .nav-link > i {
+    opacity: 1; }
 
-.nav-menu .nav-item i {
-  display: block;
-  text-align: center;
-  font-size: 28px;
-  opacity: 0.6;
-}
-
-.nav-menu .nav-item:hover {
-  background-color: #eee;
-  opacity: 1;
-}
-
-.nav-menu .nav-item:hover > .nav-link > i {
-  opacity: 1;
-}
 /*# sourceMappingURL=style.css.map */
