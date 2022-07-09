@@ -1,39 +1,40 @@
 function mediaQueries() {
-    const mediaQuery = window.matchMedia("(min-width: 992px)");
-    mediaQuery.addEventListener("change", function() {
-        if (mediaQuery.matches) {
-            var a = document.querySelectorAll(".nav-item .nav-link").title;
-            console.log(a);
-        }
-    });
-
+    const mediaQuery = window.matchMedia("(max-width: 992px)");
+    if (mediaQuery.matches) {
+        tooltipInit();
+    } else {
+        var navLinks = document.querySelectorAll(".nav-link");
+        navLinks.forEach(element => {
+            element.removeAttribute("title");
+        });
+    }
 }
 
 function renderNavbarLinks() {
     const list = document.querySelector("#nav-list");
     const navbarLinks = [{
-            title: "Home",
-            icon: "bi bi-house"
-        },
-        {
-            title: "About",
-            icon: "bi bi-info-square"
-        },
-        {
-            title: "Specials",
-            icon: "bi bi-bookmark"
-        },
-        {
-            title: "Authorization",
-            icon: "bi bi-person-fill"
-        },
-        {
-            title: "User Cart",
-            icon: "bi bi-bag"
-        },
+        title: "Home",
+        icon: "bi bi-house"
+    },
+    {
+        title: "About",
+        icon: "bi bi-info-square"
+    },
+    {
+        title: "Specials",
+        icon: "bi bi-bookmark"
+    },
+    {
+        title: "Authorization",
+        icon: "bi bi-person-fill"
+    },
+    {
+        title: "User Cart",
+        icon: "bi bi-bag"
+    },
     ]; //типо из БД получили инфу 
 
-    navbarLinks.forEach(function(elem) {
+    navbarLinks.forEach(function (elem) {
         var title = elem.title;
         var icon = elem.icon;
         var liMarkup = `<li class="nav-item">
@@ -51,15 +52,47 @@ function renderNavbarLinks() {
     }); // и тут обработали RowData(сырую информацию)
 }
 
-function tooltipInit() {
+function renderSidebarLinks() {
+    const list = document.querySelector(".sidebar .list-group");
+    const sidebarLinks = ["laptops", "netBooks", "desktop", "gaming PCS", "tablets", "servers", "monitors", "projectors"] //типо из БД получили инфу 
+
+    var newSidebarLinks = sidebarLinks.map((element, ind) => {
+        return { id: ind + 1, name: element[0].toUpperCase() + element.substring(1) };
+    });
+
+    newSidebarLinks.forEach((elem, ind) => {
+        var id = elem.id;
+        var name = elem.name;
+
+        var activeClass = "";
+        if (ind == 0) {
+            activeClass = 'active';
+        }
+        var linkMarkup = `<button 
+                        data-id="${id}"
+                        type="button" 
+                        class="border-0 list-group-item 
+                        list-group-item-action ${activeClass}">${name}</button>`;
+        list.insertAdjacentHTML('beforeend', linkMarkup);
+    });
+
+
+
+    // list.addEventListener('click', function(event) {
+    //     event.target.classList.toggle('active');
+    // });
+}
+
+function tooltipInit(condition) {
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 }
 
+
 function init() {
     renderNavbarLinks();
+    renderSidebarLinks();
     mediaQueries();
-    tooltipInit();
 }
 
 init();
